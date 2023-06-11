@@ -20,6 +20,7 @@ import com.example.mysign_fyp.DbQuery;
 import com.example.mysign_fyp.Model.QuestionModel;
 import com.example.mysign_fyp.R;
 
+import java.util.Collections;
 import java.util.List;
 
 
@@ -31,6 +32,7 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.View
     private Context context;
 
     public QuestionsAdapter(List<QuestionModel> questionsList, Context context) {
+        Collections.shuffle(questionsList); // Shuffle the questionsList
         this.questionsList = questionsList;
         this.context = context;
     }

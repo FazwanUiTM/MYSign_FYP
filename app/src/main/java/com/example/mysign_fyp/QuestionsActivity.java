@@ -10,6 +10,7 @@ import static com.example.mysign_fyp.DbQuery.g_selected_cat_index;
 import static com.example.mysign_fyp.DbQuery.g_selected_test_index;
 import static com.example.mysign_fyp.DbQuery.g_testList;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -255,6 +256,34 @@ public class QuestionsActivity extends AppCompatActivity {
         });
         alertDialog.show();
     }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setMessage("Are you sure you want to exit the test?");
+
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // User confirmed to exit the test
+                dialog.dismiss();
+                finish(); // Close the activity
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // User cancelled the exit
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
 
     public void goToQuestion(int position)
     {
