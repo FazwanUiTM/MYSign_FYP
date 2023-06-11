@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "739613952434",
+    "firebase_url": "https://mysign-1f126-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "mysign-1f126",
+    "storage_bucket": "mysign-1f126.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:739613952434:android:83f92aae91281779353cab",
+        "android_client_info": {
+          "package_name": "com.example.mysign_fyp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "739613952434-pnjhsf1a3bm6r6ge3gngf6uni96nnsel.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLuIxgcaErpNN-zvykdS_JwDrhNtMhpsI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "739613952434-pnjhsf1a3bm6r6ge3gngf6uni96nnsel.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
