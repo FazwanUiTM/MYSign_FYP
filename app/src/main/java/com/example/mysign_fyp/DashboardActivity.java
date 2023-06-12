@@ -41,6 +41,9 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             case R.id.leaderboard_layout:
                 startActivity(new Intent(DashboardActivity.this, LeaderboardActivity.class));
                 break;
+            case R.id.realTime_layout:
+                startActivity(new Intent(DashboardActivity.this, CameraActivity.class));
+                break;
             case R.id.setting_layout:
                 startActivity(new Intent(this, SettingActivity.class));
                 break;
