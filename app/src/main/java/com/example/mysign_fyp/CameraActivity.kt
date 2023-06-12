@@ -104,7 +104,7 @@ class CameraActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val TAG = "CameraXApp"
+        private const val TAG = "MYSign_FYP"
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
         private val REQUIRED_PERMISSIONS =
             mutableListOf (
