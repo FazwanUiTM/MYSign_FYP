@@ -45,8 +45,6 @@ class CameraActivity : AppCompatActivity() {
 
     private lateinit var cameraExecutor: ExecutorService
 
-    private lateinit var imageAnalyzer: ImageAnalysis
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewBinding = ActivityCameraBinding.inflate(layoutInflater)
@@ -67,6 +65,7 @@ class CameraActivity : AppCompatActivity() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
 
         cameraProviderFuture.addListener({
+            // Used to bind the lifecycle of cameras to the lifecycle owner
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
 
             // Preview
@@ -74,16 +73,6 @@ class CameraActivity : AppCompatActivity() {
                 .build()
                 .also {
                     it.setSurfaceProvider(viewBinding.viewFinder.surfaceProvider)
-                }
-
-            // ImageAnalysis
-            imageAnalyzer = ImageAnalysis.Builder()
-                .build()
-                .also {
-                    it.setAnalyzer(cameraExecutor, LumaAnalyzer { luma ->
-                        // You can perform your image analysis operations here
-                        // Access the computed luma value inside the LumaAnalyzer's listener
-                    })
                 }
 
             // Select back camera as a default
@@ -95,22 +84,7 @@ class CameraActivity : AppCompatActivity() {
 
                 // Bind use cases to camera
                 cameraProvider.bindToLifecycle(
-                    this, cameraSelector, preview, imageAnalyzer)
-
-                // Initialize TensorFlow Lite model with options
-                val compatList = CompatibilityList()
-                val options = if (compatList.isDelegateSupportedOnThisDevice) {
-                    // If the device has a supported GPU, add the GPU delegate
-                    Model.Options.Builder().setDevice(Model.Device.GPU).build()
-                } else {
-                    // If the GPU is not supported, run on 4 threads
-                    Model.Options.Builder().setNumThreads(4).build()
-                }
-
-                // Initialize the model as usual feeding in the options object
-                val myModel = MyModel.newInstance(context, options)
-
-                // Run inference per sample code
+                    this, cameraSelector, preview)
 
             } catch(exc: Exception) {
                 Log.e(TAG, "Use case binding failed", exc)
@@ -118,8 +92,6 @@ class CameraActivity : AppCompatActivity() {
 
         }, ContextCompat.getMainExecutor(this))
     }
-
-
 
     private fun requestPermissions() {
         activityResultLauncher.launch(REQUIRED_PERMISSIONS)
