@@ -34,6 +34,9 @@ import com.example.mysign_fyp.databinding.ActivityCameraBinding
 import java.nio.ByteBuffer
 import java.text.SimpleDateFormat
 import java.util.Locale
+import org.tensorflow.lite.gpu.CompatibilityList
+import org.tensorflow.lite.gpu.GpuDelegate
+import org.tensorflow.lite.support.model.Model
 
 typealias LumaListener = (luma: Double) -> Unit
 
@@ -57,6 +60,7 @@ class CameraActivity : AppCompatActivity() {
         }
 
         cameraExecutor = Executors.newSingleThreadExecutor()
+
     }
 
     private fun startCamera() {
@@ -93,12 +97,28 @@ class CameraActivity : AppCompatActivity() {
                 cameraProvider.bindToLifecycle(
                     this, cameraSelector, preview, imageAnalyzer)
 
+                // Initialize TensorFlow Lite model with options
+                val compatList = CompatibilityList()
+                val options = if (compatList.isDelegateSupportedOnThisDevice) {
+                    // If the device has a supported GPU, add the GPU delegate
+                    Model.Options.Builder().setDevice(Model.Device.GPU).build()
+                } else {
+                    // If the GPU is not supported, run on 4 threads
+                    Model.Options.Builder().setNumThreads(4).build()
+                }
+
+                // Initialize the model as usual feeding in the options object
+                val myModel = MyModel.newInstance(context, options)
+
+                // Run inference per sample code
+
             } catch(exc: Exception) {
                 Log.e(TAG, "Use case binding failed", exc)
             }
 
         }, ContextCompat.getMainExecutor(this))
     }
+
 
 
     private fun requestPermissions() {
